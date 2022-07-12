@@ -54,10 +54,10 @@
         </div>
     </div>
 
-    <script src="http://kw.fudan.edu.cn//resources/newindex/js/jquery.min.js"></script>
+    <script src="http://kw.fudan.edu.cn/resources/newindex/js/jquery.min.js"></script>
     <script>
         $.ajax({
-            url: 'http://kw.fudan.edu.cn//resources/ljqpublish.json', 
+            url: 'http://kw.fudan.edu.cn/resources/ljqpublish.json', 
             dataType: 'text',
             success: function (data) {
                 var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
@@ -97,7 +97,7 @@
             }
         });
         $.ajax({
-            url: 'http://kw.fudan.edu.cn//resources/ljqpatent.json', 
+            url: 'http://kw.fudan.edu.cn/resources/ljqpatent.json', 
             dataType: 'text',
             success: function (data) {
                 var patents = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
