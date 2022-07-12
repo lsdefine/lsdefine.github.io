@@ -47,9 +47,11 @@
         </div>
         <div class="col-lg-12">
             <h3>Links</h3>
-            <p><a href="http://kw.fudan.edu.cn/">Knowledge Works</a></p>
-            <p><a href="https://dblp.uni-trier.de/pid/177/7508.html">My DBLP</a></p>
-            <p><a href="https://github.com/lsdefine">My Github</a></p>
+            <ul>
+                <li><a href="http://kw.fudan.edu.cn/">Knowledge Works</a></li>
+                <li><a href="https://dblp.uni-trier.de/pid/177/7508.html">My DBLP</a></li>
+                <li><a href="https://github.com/lsdefine">My Github</a></li>
+            </ul>
         </div>
     </div>
 
@@ -93,7 +95,7 @@
                         });
                         aus = aus.join(', ');
                         if (z.year !== lastyear) {
-                            let ee = $('<h5></h5>');
+                            let ee = $('<h4></h4>');
                             ee.html(z.year);
                             $('#mypublish').append(ee);
                         }
