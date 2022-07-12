@@ -5,7 +5,7 @@
     <div class="row person">
         <div class="col-sm-12 col-sm-2 col-md-2 col-lg-2 img-container">
             <img class="img-circle"
-                 src="http://kw.fudan.edu.cn/resources/image/people/liangjiaqing.png"
+                 src="/liangjiaqing.png"
                  alt="Generic placeholder image"
                  style="width: 100px; height: 100px;">
         </div>
@@ -54,10 +54,10 @@
         </div>
     </div>
 
-    <script src="http://kw.fudan.edu.cn/resources/newindex/js/jquery.min.js"></script>
+    <script src="/jquery.min.js"></script>
     <script>
         $.ajax({
-            url: 'http://kw.fudan.edu.cn/resources/ljqpublish.json', 
+            url: '/ljqpublish.json', 
             dataType: 'text',
             success: function (data) {
                 var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
@@ -97,7 +97,7 @@
             }
         });
         $.ajax({
-            url: 'http://kw.fudan.edu.cn/resources/ljqpatent.json', 
+            url: '/ljqpatent.json', 
             dataType: 'text',
             success: function (data) {
                 var patents = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
