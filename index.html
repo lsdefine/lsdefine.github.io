@@ -1,5 +1,3 @@
-{% extends 'people/base_people.html' %}
-{% block main_content %}
     <div class="row">
         <h2 class="people_categroy">Researcher</h2>
         <hr>
@@ -7,7 +5,7 @@
     <div class="row person">
         <div class="col-sm-12 col-sm-2 col-md-2 col-lg-2 img-container">
             <img class="img-circle"
-                 src="/resources/image/people/liangjiaqing.png"
+                 src="http://kw.fudan.edu.cn/resources/image/people/liangjiaqing.png"
                  alt="Generic placeholder image"
                  style="width: 100px; height: 100px;">
         </div>
@@ -56,10 +54,10 @@
         </div>
     </div>
 
-    <script src="/resources/newindex/js/jquery.min.js"></script>
+    <script src="http://kw.fudan.edu.cn//resources/newindex/js/jquery.min.js"></script>
     <script>
         $.ajax({
-            url: '/resources/ljqpublish.json', 
+            url: 'http://kw.fudan.edu.cn//resources/ljqpublish.json', 
             dataType: 'text',
             success: function (data) {
                 var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
@@ -99,7 +97,7 @@
             }
         });
         $.ajax({
-            url: '/resources/ljqpatent.json', 
+            url: 'http://kw.fudan.edu.cn//resources/ljqpatent.json', 
             dataType: 'text',
             success: function (data) {
                 var patents = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
@@ -123,4 +121,3 @@
     <!-- START THE FEATURETTES -->
 
     <hr class="featurette-divider people_categroy">
-{% endblock %}
