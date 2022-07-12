@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="col-lg-12">
-            <h3>Publications (<a href="https://dblp.uni-trier.de/pid/177/7508.html">DBLP</a>)</h3>
+            <h3>Publications (<a href="javascript:timelist()">Sort by Years</a>)</h3>
             <ul style="list-style-type: decimal;" id="mypublish">
             </ul>
         </div>
@@ -46,7 +46,8 @@
             <ul style="list-style-type: decimal;" id="mypatent"> </ul>
         </div>
         <div class="col-lg-12">
-            <h3>My Github</h3>
+            <h3>Links</h3>
+            <p><a href="https://dblp.uni-trier.de/pid/177/7508.html">My DBLP</a></p>
             <p><a href="https://github.com/lsdefine">https://github.com/lsdefine</a></p>
         </div>
     </div>
@@ -70,35 +71,79 @@
             return rank;
         }
 
-        $.ajax({
-            url: '/ljqpublish.json', 
-            dataType: 'text',
-            success: function (data) {
-                var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
-                papers.pop();
-                console.log(papers);
-                papers.sort(function (a, b) {
-                    return (a.order - b.order) * 10000 + (b.year - a.year);
-                });
-                papers.forEach(function (z) {
-                    let aus = z.authors.map(function (x) {
-                        if (x.indexOf('Jiaqing') >= 0) return "<strong>"+x+"</strong>";
-                        return x;
+        function timelist() {
+            $.ajax({
+                url: '/ljqpublish.json', 
+                dataType: 'text',
+                success: function (data) {
+                    $('#mypublish').html("");
+                    var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
+                    papers.pop();
+                    papers.sort(function (a, b) {
+                        return (b.year - a.year) * 100 + (a.order - b.order);
                     });
-                    aus = aus.join(', ');
-                    let ele = $('<li style="margin:3px"></li>');
-                    ele.append(aus);
-                    ele.append(".<br/>");
-                    ele.append("<i>" + z.title + "</i>");
-                    ele.append(". ");
-                    ele.append(z.conf);
-                    ele.append(". ");
-                    let rank = getRank(z);
-                    if (rank !== "") ele.append("<strong>"+ rank + "</strong>");
-                    $('#mypublish').append(ele);
-                });
-            }
-        });
+                    let lastyear = "1990";
+                    papers.forEach(function (z) {
+                        let aus = z.authors.map(function (x) {
+                            if (x.indexOf('Jiaqing') >= 0) return "<strong>"+x+"</strong>";
+                            return x;
+                        });
+                        aus = aus.join(', ');
+                        if (z.yera !== lastyear) {
+                            let ee = $('<h4></h4>');
+                            ee.html(z.year);
+                            $('#mypublish').append(ee);
+                        }
+                        let ele = $('<li style="margin:3px"></li>');
+                        ele.append(aus);
+                        ele.append(".<br/>");
+                        ele.append("<i>" + z.title + "</i>");
+                        ele.append(". ");
+                        ele.append(z.conf);
+                        ele.append(". ");
+                        let rank = getRank(z);
+                        if (rank !== "") ele.append("<strong>"+ rank + "</strong>");
+                        $('#mypublish').append(ele);
+                        lastyear = z.year;
+                    });
+                }
+            });
+        }
+
+        function defaultlist() {
+            $.ajax({
+                url: '/ljqpublish.json', 
+                dataType: 'text',
+                success: function (data) {
+                    $('#mypublish').html("");
+                    var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
+                    papers.pop();
+                    console.log(papers);
+                    papers.sort(function (a, b) {
+                        return (a.order - b.order) * 10000 + (b.year - a.year);
+                    });
+                    papers.forEach(function (z) {
+                        let aus = z.authors.map(function (x) {
+                            if (x.indexOf('Jiaqing') >= 0) return "<strong>"+x+"</strong>";
+                            return x;
+                        });
+                        aus = aus.join(', ');
+                        let ele = $('<li style="margin:3px"></li>');
+                        ele.append(aus);
+                        ele.append(".<br/>");
+                        ele.append("<i>" + z.title + "</i>");
+                        ele.append(". ");
+                        ele.append(z.conf);
+                        ele.append(". ");
+                        let rank = getRank(z);
+                        if (rank !== "") ele.append("<strong>"+ rank + "</strong>");
+                        $('#mypublish').append(ele);
+                    });
+                }
+            });
+        }
+
+        defaultlist();
         $.ajax({
             url: '/ljqpatent.json', 
             dataType: 'text',
