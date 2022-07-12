@@ -1,6 +1,126 @@
----
-layout: page
----
+{% extends 'people/base_people.html' %}
+{% block main_content %}
+    <div class="row">
+        <h2 class="people_categroy">Researcher</h2>
+        <hr>
+    </div>
+    <div class="row person">
+        <div class="col-sm-12 col-sm-2 col-md-2 col-lg-2 img-container">
+            <img class="img-circle"
+                 src="/resources/image/people/liangjiaqing.png"
+                 alt="Generic placeholder image"
+                 style="width: 100px; height: 100px;">
+        </div>
+        <div class="col-sm-12 col-sm-4 col-md-4 col-lg-4 text-left">
+            <h3>Jiaqing Liang</h3>
+            <h4>梁家卿</h4>
+            <p>
+                <a href="mailto:l.j.q.light@gmail.com">l.j.q.light@gmail.com</a>
+            </p>
+            <p>
+                <a href="mailto:liangjiaqing@fudan.edu.com">liangjiaqing@fudan.edu.com</a>
+             </p>
+            <p>Assistant Professor</p>
+	      <p>School of Data Science</p>
+            <p>Fudan University, Shanghai, China</p>
+        </div>
+    </div>
+    <div class="row person">
+        <div class="col-lg-12">
+            <h3>Research Interests</h3>
+            <p>Knowledge Graph, Deep Learning</p>
+        </div>
+        <div class="col-lg-12">
+            <h3>Experience</h3>
+            <ul>
+                <li>Postdoctoral researcher in School of Computer Science, Fudan University, 2020-2022
+                </li>
+                <li>Ph.D in School of Computer Science, Fudan University, 2015-2020
+                </li>
+                <li>B.S in School of Computer Science, Fudan University, 2011-2015
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <h3>Publications (<a href="https://dblp.uni-trier.de/pid/177/7508.html">DBLP</a>)</h3>
+            <ul style="list-style-type: decimal;" id="mypublish">
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <h3>Patents</h3>
+            <ul style="list-style-type: decimal;" id="mypatent"> </ul>
+        </div>
+        <div class="col-lg-12">
+            <h3>My Github</h3>
+            <p><a href="https://github.com/lsdefine">https://github.com/lsdefine</a></p>
+        </div>
+    </div>
 
-{% include archive.html %}
+    <script src="/resources/newindex/js/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            url: '/resources/ljqpublish.json', 
+            dataType: 'text',
+            success: function (data) {
+                var papers = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
+                papers.pop();
+                console.log(papers);
+                papers.sort(function (a, b) {
+                    return (a.order - b.order) * 10000 + (b.year - a.year);
+                });
+                papers.forEach(function (z) {
+                    let aus = z.authors.map(function (x) {
+                        if (x.indexOf('Jiaqing') >= 0) return "<strong>"+x+"</strong>";
+                        return x;
+                    });
+                    aus = aus.join(', ');
+                    let ele = $('<li style="margin:3px"></li>');
+                    ele.append(aus);
+                    ele.append(".<br/>");
+                    ele.append("<i>" + z.title + "</i>");
+                    ele.append(". ");
+                    ele.append(z.conf);
+                    ele.append(". ");
+                    let rank = "";
+                    if (z.conf.indexOf("TKDE") >= 0) rank = "CCF Rank A Journal";
+                    if (z.conf.indexOf("AAAI") >= 0) rank = "CCF Rank A Conference";
+                    if (z.conf.indexOf("ACL") >= 0) rank = "CCF Rank A Conference";
+                    if (z.conf.indexOf("ICDE") >= 0) rank = "CCF Rank A Conference";
+                    if (z.conf.indexOf("IJCAI") >= 0) rank = "CCF Rank A Conference";
+                    if (z.conf.indexOf("CIKM") >= 0) rank = "CCF Rank B Conference";
+                    if (z.conf.indexOf("DASFAA") >= 0) rank = "CCF Rank B Conference";
+                    if (z.conf.indexOf("COMPSAC") >= 0) rank = "CCF Rank B Conference";
+                    if (z.conf.indexOf("ISWC") >= 0) rank = "CCF Rank B Conference";
+                    if (z.conf.indexOf("WSDM") >= 0) rank = "CCF Rank B Conference";
+                    if (z.conf.indexOf("ICAPS") >= 0) rank = "CCF Rank B Conference";
+                    if (rank !== "") ele.append("<strong>"+ rank + "</strong>");
+                    $('#mypublish').append(ele);
+                });
+            }
+        });
+        $.ajax({
+            url: '/resources/ljqpatent.json', 
+            dataType: 'text',
+            success: function (data) {
+                var patents = $.parseJSON('['+data.replace(/\n/g, ",")+'{}]');
+                patents.pop();
+                patents.sort(function (a, b) {
+                    return (a.status + a.publishtime) < (b.status + b.publishtime) ? 1 : -1;
+                });
+                patents.forEach(function (z) {
+                    let ele = $('<li style="margin:3px"></li>');
+                    ele.append(z.code);
+                    ele.append(". ");
+                    ele.append("<i>" + z.title + "</i>");
+                    ele.append(". ");
+                    if (z.status === '已授权') ele.append("<strong>"+z.status+"<strong>")
+                    else ele.append(z.status)
+                    $('#mypatent').append(ele);
+                });
+            }
+        });
+    </script>    
+    <!-- START THE FEATURETTES -->
 
+    <hr class="featurette-divider people_categroy">
+{% endblock %}
