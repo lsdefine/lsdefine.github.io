@@ -53,6 +53,23 @@
 
     <script src="/jquery.min.js"></script>
     <script>
+
+        function getRank(z) {
+            let rank = "";
+            if (z.conf.indexOf("TKDE") >= 0) rank = "CCF Rank A Journal";
+            if (z.conf.indexOf("AAAI") >= 0) rank = "CCF Rank A Conference";
+            if (z.conf.indexOf("ACL") >= 0) rank = "CCF Rank A Conference";
+            if (z.conf.indexOf("ICDE") >= 0) rank = "CCF Rank A Conference";
+            if (z.conf.indexOf("IJCAI") >= 0) rank = "CCF Rank A Conference";
+            if (z.conf.indexOf("CIKM") >= 0) rank = "CCF Rank B Conference";
+            if (z.conf.indexOf("DASFAA") >= 0) rank = "CCF Rank B Conference";
+            if (z.conf.indexOf("COMPSAC") >= 0) rank = "CCF Rank B Conference";
+            if (z.conf.indexOf("ISWC") >= 0) rank = "CCF Rank B Conference";
+            if (z.conf.indexOf("WSDM") >= 0) rank = "CCF Rank B Conference";
+            if (z.conf.indexOf("ICAPS") >= 0) rank = "CCF Rank B Conference";
+            return rank;
+        }
+
         $.ajax({
             url: '/ljqpublish.json', 
             dataType: 'text',
@@ -76,18 +93,7 @@
                     ele.append(". ");
                     ele.append(z.conf);
                     ele.append(". ");
-                    let rank = "";
-                    if (z.conf.indexOf("TKDE") >= 0) rank = "CCF Rank A Journal";
-                    if (z.conf.indexOf("AAAI") >= 0) rank = "CCF Rank A Conference";
-                    if (z.conf.indexOf("ACL") >= 0) rank = "CCF Rank A Conference";
-                    if (z.conf.indexOf("ICDE") >= 0) rank = "CCF Rank A Conference";
-                    if (z.conf.indexOf("IJCAI") >= 0) rank = "CCF Rank A Conference";
-                    if (z.conf.indexOf("CIKM") >= 0) rank = "CCF Rank B Conference";
-                    if (z.conf.indexOf("DASFAA") >= 0) rank = "CCF Rank B Conference";
-                    if (z.conf.indexOf("COMPSAC") >= 0) rank = "CCF Rank B Conference";
-                    if (z.conf.indexOf("ISWC") >= 0) rank = "CCF Rank B Conference";
-                    if (z.conf.indexOf("WSDM") >= 0) rank = "CCF Rank B Conference";
-                    if (z.conf.indexOf("ICAPS") >= 0) rank = "CCF Rank B Conference";
+                    let rank = getRank(z);
                     if (rank !== "") ele.append("<strong>"+ rank + "</strong>");
                     $('#mypublish').append(ele);
                 });
