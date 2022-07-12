@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="col-lg-12">
-            <h3>Publications (<a href="javascript:timelist()">Sort by Years</a>)</h3>
+            <h3>Publications (<a id="sorder" href="javascript:defaultlist()">Sort by Orders</a><a id="syear" href="javascript:timelist()">Sort by Years</a>)</h3>
             <ul style="list-style-type: decimal;" id="mypublish">
             </ul>
         </div>
@@ -72,6 +72,8 @@
         }
 
         function timelist() {
+            $("#syear").hide();
+            $("#sorder").show();
             $.ajax({
                 url: '/ljqpublish.json', 
                 dataType: 'text',
@@ -89,7 +91,7 @@
                             return x;
                         });
                         aus = aus.join(', ');
-                        if (z.yera !== lastyear) {
+                        if (z.year !== lastyear) {
                             let ee = $('<h4></h4>');
                             ee.html(z.year);
                             $('#mypublish').append(ee);
@@ -111,6 +113,8 @@
         }
 
         function defaultlist() {
+            $("#syear").show();
+            $("#sorder").hide();
             $.ajax({
                 url: '/ljqpublish.json', 
                 dataType: 'text',
@@ -143,7 +147,7 @@
             });
         }
 
-        defaultlist();
+        timelist();
         $.ajax({
             url: '/ljqpatent.json', 
             dataType: 'text',
